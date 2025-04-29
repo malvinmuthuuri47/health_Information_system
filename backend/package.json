@@ -4,11 +4,12 @@
   "description": "\"Health Information System backend\"",
   "license": "MIT",
   "author": "Malvin",
-  "type": "module",
+  "type": "commonjs",
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon dist/index.js",
+    "build": "tsc",
+    "start": "nodemon public/index.js",
     "dev": "tsc --watch"
   },
   "dependencies": {

@@ -1,13 +1,11 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-import doctorRoutes from './routes/doctorRoutes.ts';
-
-dotenv.config();
+import env from './config/env';
+import doctorRoutes from './routes/doctorRoutes';
 
 const app = express();
-const db_conn_str: string = process.env.mongo_uri;
-const port = process.env.PORT;
+const db_conn_str = env.MONGO_URI;
+const port = env.PORT;
 
 // middleware to parse JSON request bodies
 app.use(express.json());

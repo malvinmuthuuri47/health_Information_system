@@ -1,7 +1,7 @@
-import Doctor from '../models/doctor.ts';
-import { Request, Response, RequestHandler } from 'express';
+import Doctor from '../models/doctor';
+import { Request, Response } from 'express';
 
-export const createDoctor: RequestHandler = async (req, res) => {
+export const createDoctor = async (req: Request, res: Response) : Promise<any> => {
     try {
         const { name, email, password, specialization } = req.body;
 
@@ -22,5 +22,6 @@ export const createDoctor: RequestHandler = async (req, res) => {
         res.status(201).json({ message: 'Doctor created successfully', doctor: newDoctor });
     } catch (error) {
         res.status(500).json({ message: 'Server error', error });
+        // next(error);
     }
 };
