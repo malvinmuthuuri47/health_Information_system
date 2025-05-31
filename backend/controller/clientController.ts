@@ -43,7 +43,7 @@ export const loginClient = async (req: Request, res: Response) : Promise<any> =>
             return res.status(404).json({ message: 'Client not found' });
         }
 
-        console.log('Here is the Client from teh database', client);
+        console.log('Here is the Client from the database', client);
 
         const isMatch = await bcrypt.compare(password, client.password as string);
         if (!isMatch) {
@@ -65,3 +65,21 @@ export const loginClient = async (req: Request, res: Response) : Promise<any> =>
         res.status(500).json({ message: 'Server Error', error });
     }
 };
+
+export const clientDash = async (req: Request, res: Response) : Promise<any> => {
+    try {
+        return res.status(200).json({ message: 'You have successfully hit the client dashboard' });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: 'Server Error' });
+    }
+}
+
+export const logoutClient = (req: Request, res: Response) : any => {
+    try {
+        res.clearCookie('token');
+        res.status(200).json({ message: 'Logged out successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Server Error', error });
+    }
+}

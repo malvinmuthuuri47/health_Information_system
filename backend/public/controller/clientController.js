@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.loginClient = exports.createClient = void 0;
+exports.logoutClient = exports.clientDash = exports.loginClient = exports.createClient = void 0;
 const client_1 = __importDefault(require("../models/client"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
@@ -49,7 +49,7 @@ const loginClient = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         if (!client) {
             return res.status(404).json({ message: 'Client not found' });
         }
-        console.log('Here is the Client from teh database', client);
+        console.log('Here is the Client from the database', client);
         const isMatch = yield bcryptjs_1.default.compare(password, client.password);
         if (!isMatch) {
             return res.status(400).json({ message: 'Invalid credentials' });
@@ -65,3 +65,23 @@ const loginClient = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 exports.loginClient = loginClient;
+const clientDash = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        return res.status(200).json({ message: 'You have successfully hit the client dashboard' });
+    }
+    catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: 'Server Error' });
+    }
+});
+exports.clientDash = clientDash;
+const logoutClient = (req, res) => {
+    try {
+        res.clearCookie('token');
+        res.status(200).json({ message: 'Logged out successfully' });
+    }
+    catch (error) {
+        res.status(500).json({ message: 'Server Error', error });
+    }
+};
+exports.logoutClient = logoutClient;
