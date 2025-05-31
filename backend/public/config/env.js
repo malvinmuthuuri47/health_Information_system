@@ -15,5 +15,6 @@ const getEnvVar = (key) => {
 const env = {
     PORT: getEnvVar('PORT'),
     MONGO_URI: getEnvVar('mongo_uri'),
+    JWT_SECRET: getEnvVar('jwt_secret'),
 };
 exports.default = env;

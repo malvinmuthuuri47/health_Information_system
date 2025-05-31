@@ -14,4 +14,4 @@ const doctorSchema = new Schema<Idoctor>({
     specialization: String
 })
 
-export default model('Doctor', doctorSchema);
+export default model<Idoctor>('Doctor', doctorSchema);

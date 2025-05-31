@@ -10,8 +10,8 @@ interface Iprogram {
 const programSchema = new Schema<Iprogram>({
     title: String,
     description: String,
-    createdBy: { type: Schema.Types.ObjectId, ref: 'Doctor' },
-    createdAt: { type: Date, default: Date.now }
+    createdBy: { type: Schema.Types.ObjectId, ref: 'Doctor', required: true },
+    createdAt: { type: Date, default: Date.now, required: true }
 })
 
-export default model('Program', programSchema);
+export default model<Iprogram>('Program', programSchema);
