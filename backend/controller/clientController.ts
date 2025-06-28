@@ -75,11 +75,48 @@ export const clientDash = async (req: Request, res: Response) : Promise<any> => 
     }
 }
 
+export const updateClient = async (req: Request, res: Response) : Promise<any> => {
+    try {
+        const clientId = req.params.clientId;
+        const updates = req.body;
+        console.log(clientId);
+        
+        const updatedClient = await Client.findByIdAndUpdate(clientId, updates, {
+            new: true,
+            runValidators: true
+        })
+
+        if (!updatedClient) {
+            return res.status(404).json({ message: 'Client not found' });
+        }
+
+        return res.status(200).json({ message: 'Client updated successfully', client: updatedClient });
+    } catch (error) {
+        return res.status(500).json({ message: 'Server Error', error });
+    }
+}
+
 export const logoutClient = (req: Request, res: Response) : any => {
     try {
         res.clearCookie('token');
         res.status(200).json({ message: 'Logged out successfully' });
     } catch (error) {
         res.status(500).json({ message: 'Server Error', error });
+    }
+}
+
+export const deleteClient = async (req: Request, res: Response) : Promise<any> => {
+    try {
+        const { clientId } = req.params;
+    
+        const deletedClient = await Client.findByIdAndDelete(clientId);
+    
+        if (!deletedClient) {
+            return res.status(404).json({ message: 'Client not found' });
+        }
+
+        return res.status(200).json({ message: 'Client deleted successfully', deletedClient });
+    } catch (error) {
+        return res.status(500).json({ message: 'Server error', error });
     }
 }

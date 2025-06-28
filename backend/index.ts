@@ -4,7 +4,6 @@ import env from './config/env';
 import cookieParser from 'cookie-parser';
 
 import doctorRoutes from './routes/doctorRoutes';
-import programRoutes from './routes/programRoutes';
 import clientRoutes from './routes/clientRoutes';
 
 const app = express();
@@ -17,7 +16,6 @@ app.use(cookieParser());
 
 // program routes
 app.use('/auth', doctorRoutes);
-app.use('/program', programRoutes);
 app.use('/client', clientRoutes);
 
 mongoose.connect(db_conn_str)

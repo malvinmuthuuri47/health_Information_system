@@ -5,7 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const doctorController_1 = require("../controller/doctorController");
-// import { loginDoctor, logoutDoctor } from '../controller/authController';
+const clientController_1 = require("../controller/clientController");
+const programController_1 = require("../controller/programController");
 const protectRoutes_1 = require("../middleware/protectRoutes");
 const router = express_1.default.Router();
 // doctor authentication API
@@ -14,10 +15,12 @@ router.post('/login', doctorController_1.loginDoctor);
 router.post('/logout', doctorController_1.logoutDoctor);
 // doctor application routes
 router.get('/dashboard', protectRoutes_1.protectRoute, protectRoutes_1.requireDoctor, doctorController_1.doctorDash);
-// router.post('/', createProgram);
-// router.post('/', updateProgram);
-// router.post('/', deleteProgram);
-// router.post('/', createClient);
-// router.post('/', updateClient);
-// router.post('/', deleteClient);
+// client routes
+router.post('/clientRegister', protectRoutes_1.protectRoute, protectRoutes_1.requireDoctor, clientController_1.createClient);
+router.patch('/updateClient/:clientId', protectRoutes_1.protectRoute, protectRoutes_1.requireDoctor, clientController_1.updateClient);
+router.delete('/deleteClient/:clientId', protectRoutes_1.protectRoute, protectRoutes_1.requireDoctor, clientController_1.deleteClient);
+// program API
+router.post('/newProgram', protectRoutes_1.protectRoute, protectRoutes_1.requireDoctor, programController_1.createProgram);
+router.patch('/updateProgram/:programId', protectRoutes_1.protectRoute, protectRoutes_1.requireDoctor, programController_1.updateProgram);
+router.delete('/deleteProgram/:programId', protectRoutes_1.protectRoute, protectRoutes_1.requireDoctor, programController_1.deleteProgram);
 exports.default = router;

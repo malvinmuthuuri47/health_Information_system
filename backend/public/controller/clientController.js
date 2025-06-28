@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.logoutClient = exports.clientDash = exports.loginClient = exports.createClient = void 0;
+exports.deleteClient = exports.logoutClient = exports.updateClient = exports.clientDash = exports.loginClient = exports.createClient = void 0;
 const client_1 = __importDefault(require("../models/client"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
@@ -75,6 +75,25 @@ const clientDash = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.clientDash = clientDash;
+const updateClient = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const clientId = req.params.clientId;
+        const updates = req.body;
+        console.log(clientId);
+        const updatedClient = yield client_1.default.findByIdAndUpdate(clientId, updates, {
+            new: true,
+            runValidators: true
+        });
+        if (!updatedClient) {
+            return res.status(404).json({ message: 'Client not found' });
+        }
+        return res.status(200).json({ message: 'Client updated successfully', client: updatedClient });
+    }
+    catch (error) {
+        return res.status(500).json({ message: 'Server Error', error });
+    }
+});
+exports.updateClient = updateClient;
 const logoutClient = (req, res) => {
     try {
         res.clearCookie('token');
@@ -85,3 +104,17 @@ const logoutClient = (req, res) => {
     }
 };
 exports.logoutClient = logoutClient;
+const deleteClient = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { clientId } = req.params;
+        const deletedClient = yield client_1.default.findByIdAndDelete(clientId);
+        if (!deletedClient) {
+            return res.status(404).json({ message: 'Client not found' });
+        }
+        return res.status(200).json({ message: 'Client deleted successfully', deletedClient });
+    }
+    catch (error) {
+        return res.status(500).json({ message: 'Server error', error });
+    }
+});
+exports.deleteClient = deleteClient;
