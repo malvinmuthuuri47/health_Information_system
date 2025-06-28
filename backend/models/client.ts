@@ -8,7 +8,7 @@ interface Iclient {
     phone: String,
     address: String,
     registeredAt: Date,
-    enrolledPrograms: Schema.Types.ObjectId
+    enrolledPrograms: Schema.Types.ObjectId[]
 }
 
 const clientSchema = new Schema<Iclient>({

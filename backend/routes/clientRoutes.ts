@@ -10,6 +10,6 @@ router.post('/login', loginClient);
 
 // client application routes
 router.get('/dashboard', requireClient, clientDash);
-router.get('/logout', logoutClient);
+router.post('/logout', logoutClient);
 
 export default router;

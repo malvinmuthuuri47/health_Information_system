@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = require("mongoose");
 const programSchema = new mongoose_1.Schema({
-    title: String,
+    title: { type: String, unique: true, required: true },
     description: String,
     createdBy: { type: mongoose_1.Schema.Types.ObjectId, ref: 'Doctor', required: true },
     createdAt: { type: Date, default: Date.now, required: true }

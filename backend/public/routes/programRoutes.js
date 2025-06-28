@@ -7,6 +7,6 @@ const express_1 = __importDefault(require("express"));
 const programController_1 = require("../controller/programController");
 const router = express_1.default.Router();
 // program API
-router.get('/newProgram', programController_1.createProgram);
-// router.post('/newProgram', createProgram);
+// router.get('/newProgram', createProgram);
+router.post('/newProgram', programController_1.createProgram);
 exports.default = router;

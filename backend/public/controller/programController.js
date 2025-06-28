@@ -19,13 +19,17 @@ const createProgram = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         console.log(req.body);
         // res.json({ message: 'You just hit the createProgram GET API' });
         const { title, description, doctorId } = req.body;
+        const existingProgram = yield program_1.default.findOne({ title });
+        if (existingProgram) {
+            return res.status(400).json({ message: 'Program with same name exists' });
+        }
         const program = new program_1.default({
             title,
             description,
-            createdAt: doctorId,
+            createdBy: doctorId,
         });
         yield program.save();
-        res.status(201).json({ message: 'Program created', program });
+        res.status(201).json({ message: 'Program created successfully', program });
     }
     catch (error) {
         res.status(500).json({ message: "Error creating program", error });

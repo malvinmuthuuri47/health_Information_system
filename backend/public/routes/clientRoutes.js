@@ -12,5 +12,5 @@ router.post('/register', protectRoutes_1.protectRoute, protectRoutes_1.requireDo
 router.post('/login', clientController_1.loginClient);
 // client application routes
 router.get('/dashboard', protectRoutes_1.requireClient, clientController_1.clientDash);
-router.get('/logout', clientController_1.logoutClient);
+router.post('/logout', clientController_1.logoutClient);
 exports.default = router;

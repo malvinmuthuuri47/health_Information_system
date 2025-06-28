@@ -8,7 +8,7 @@ interface Iprogram {
 }
 
 const programSchema = new Schema<Iprogram>({
-    title: String,
+    title: { type: String, unique: true, required: true },
     description: String,
     createdBy: { type: Schema.Types.ObjectId, ref: 'Doctor', required: true },
     createdAt: { type: Date, default: Date.now, required: true }

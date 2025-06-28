@@ -7,14 +7,21 @@ export const createProgram = async (req: Request, res: Response) : Promise<any> 
         // res.json({ message: 'You just hit the createProgram GET API' });
         const { title, description, doctorId } = req.body;
 
+        const existingProgram = await Program.findOne({ title });
+
+        if (existingProgram)
+        {
+            return res.status(400).json({ message: 'Program with same name exists' })
+        }
+
         const program = new Program({
             title,
             description,
-            createdAt: doctorId,
+            createdBy: doctorId,
         });
 
         await program.save();
-        res.status(201).json({ message: 'Program created', program });
+        res.status(201).json({ message: 'Program created successfully', program });
     } catch (error) {
         res.status(500).json({ message: "Error creating program", error });
     }
