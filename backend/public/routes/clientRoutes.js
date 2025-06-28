@@ -10,6 +10,6 @@ const router = express_1.default.Router();
 // client authentication API
 router.post('/login', clientController_1.loginClient);
 // client application routes
-router.get('/dashboard', protectRoutes_1.requireClient, clientController_1.clientDash);
+router.get('/dashboard/:clientId', protectRoutes_1.requireClient, clientController_1.clientDash);
 router.post('/logout', clientController_1.logoutClient);
 exports.default = router;

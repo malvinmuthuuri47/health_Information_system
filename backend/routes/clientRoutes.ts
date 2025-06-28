@@ -8,7 +8,7 @@ const router = express.Router();
 router.post('/login', loginClient);
 
 // client application routes
-router.get('/dashboard', requireClient, clientDash);
+router.get('/dashboard/:clientId', requireClient, clientDash);
 router.post('/logout', logoutClient);
 
 export default router;

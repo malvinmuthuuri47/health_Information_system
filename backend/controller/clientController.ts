@@ -68,20 +68,27 @@ export const loginClient = async (req: Request, res: Response) : Promise<any> =>
 
 export const clientDash = async (req: Request, res: Response) : Promise<any> => {
     try {
-        return res.status(200).json({ message: 'You have successfully hit the client dashboard' });
+        const clientId = req.params.clientId;
+        const client = await Client.findById(clientId)
+        .populate('enrolledPrograms', 'title description createdBy');
+
+        if (!client) {
+            return res.status(404).json({ message: 'Client not found' });
+        }
+        res.status(200).json({ client });
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ message: 'Server Error' });
+        return res.status(500).json({ message: 'Failed to fetch profile', error });
     }
 }
 
 export const updateClient = async (req: Request, res: Response) : Promise<any> => {
     try {
         const clientId = req.params.clientId;
-        const updates = req.body;
+        const { enrolledPrograms, ...otherUpdates } = req.body;
         console.log(clientId);
         
-        const updatedClient = await Client.findByIdAndUpdate(clientId, updates, {
+        const updatedClient = await Client.findByIdAndUpdate(clientId, otherUpdates, {
             new: true,
             runValidators: true
         })
@@ -92,7 +99,7 @@ export const updateClient = async (req: Request, res: Response) : Promise<any> =
 
         return res.status(200).json({ message: 'Client updated successfully', client: updatedClient });
     } catch (error) {
-        return res.status(500).json({ message: 'Server Error', error });
+        return res.status(500).json({ message: 'Error updating client', error });
     }
 }
 
